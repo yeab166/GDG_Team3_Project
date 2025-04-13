@@ -30,7 +30,7 @@ const loginUser = async (req, res) => {
     return res.status(400).json({ error: 'Invalid credentials' });
   }
 
-  //this token expire after 15 min to make more secure uor profile.
+  //this token expire after 15 min to make more secure our profile.
   const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '15min' });
   res.json({ token });
 };
