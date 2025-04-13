@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const BlogPost = require('../models/BlogPost');
+const controllers=require('../controllers/blogController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Get all blog posts
@@ -47,20 +48,6 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     res.json({ message: 'Post deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// Create blog post (only authenticated users)
-router.post('/', authMiddleware, async (req, res) => {
-  const { title, content, category } = req.body;
-  const author = req.user.id;  // Ensure the author is set to the authenticated user
-
-  try {
-    const post = new BlogPost({ title, content, category, author });
-    await post.save();
-    res.status(201).json(post);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
   }
 });
 
